@@ -14,15 +14,16 @@
   (let [choice-map (frequencies card-choices)]
     (map #(sort (take (get choice-map % 0) (shuffle (get column-numbers %)))) (range 9))))
 
-(def empty-card
-  (into [] (repeat 3 (into [] (repeat 9 nil)))))
-
-(defn generate-card [card-columns base-card]
+(defn generate-card [card-columns]
   (first
     (reduce
-      (fn [[card columns] row]
-        (let [row-columns (set (take 5 (remove #(empty? (nth columns %)) (shuffle (range 9)))))
-              new-card (reduce #(assoc-in %1 [row %2] (first (nth card-columns %2))) card row-columns)]
-          [new-card (map-indexed #(if (contains? row-columns %1) (rest %2) %2) columns)]))
-      [base-card card-columns]
-      (range 3))))
+      (fn [[card columns] row-num]
+        (let [base-columns (keep-indexed #(if (= row-num (count %2)) %1) columns)
+              optional-columns (filter #(< 0 (count (nth columns %)) row-num) (shuffle (range 9)))
+              row-columns (take 5 (concat base-columns optional-columns))
+              column-nums (map #(first (nth columns %)) row-columns )
+              column-map (zipmap row-columns column-nums)
+              row (mapv #(get column-map %) (range 9))]
+          [(conj card row) (map-indexed #(if (contains? column-map %1) (rest %2) %2) columns)]))
+      [[] card-columns]
+      (range 3 0 -1))))
