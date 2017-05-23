@@ -1,4 +1,5 @@
-(ns madison.meetup.bowling)
+(ns madison.meetup.bowling
+  "Solution for scoring a bwoling game")
 
 (defn emtpy-game []
   {:frames [] :current-frame 0 :score 0 :frame-scores []})

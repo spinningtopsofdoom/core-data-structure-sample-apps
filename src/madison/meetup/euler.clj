@@ -1,4 +1,7 @@
 (ns madison.meetup.euler
+  "Solution for project Euler Problem 22
+
+  https://projecteuler.net/problem=22"
   (:require [clojure.string :as string]))
 
 (def names (slurp "names.txt"))

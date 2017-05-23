@@ -1,4 +1,7 @@
-(ns madison.meetup.housie)
+(ns madison.meetup.housie
+  "Solution for the Housie problem from Ruby Quiz
+
+   http://rubyquiz.com/quiz114.html")
 
 (defn generate-column-numbers []
   (let [custom-range {0 9 8 11}
