@@ -1,9 +1,8 @@
 (ns madison.meetup.euler
-  (:require [clojure.edn :as edn]
-            [clojure.string :as string]))
+  (:require [clojure.string :as string]))
 
 (def names (slurp "names.txt"))
-(def sorted-names (sort (edn/read-string (str "[" names "]"))))
+(def sorted-names (sort (string/split (string/replace names "\"" "") #",")))
 
 (defn index-of [^Character x]
   (Character/getNumericValue x))
